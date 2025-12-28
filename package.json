@@ -1,0 +1,57 @@
+{
+  "name": "kwitariusz-szkoly",
+  "version": "1.0.0",
+  "description": "Aplikacja do rozliczeń opłat za posiłki i zajęcia w szkołach",
+  "main": "src/main/index.js",
+  "type": "module",
+  "scripts": {
+    "start": "electron .",
+    "build": "npm run build:app && npm run build:electron",
+    "build:app": "echo Building app...",
+    "build:electron": "electron-builder --win --publish never",
+    "dist": "electron-builder --win -p onTagOrDraft"
+  },
+  "dependencies": {
+    "better-sqlite3": "^11.0.0"
+  },
+  "devDependencies": {
+    "electron": "^27.0.0",
+    "electron-builder": "^24.6.4"
+  },
+  "build": {
+    "appId": "com.kwitariusz.szkoły",
+    "productName": "Kwitariusz Szkoły",
+    "directories": {
+      "buildResources": "build"
+    },
+    "files": [
+      "src/**/*",
+      "node_modules/**/*"
+    ],
+    "extraResources": [
+      {
+        "from": "src/database",
+        "to": "database"
+      }
+    ],
+    "win": {
+      "target": [
+        {
+          "target": "nsis",
+          "arch": ["x64"]
+        },
+        {
+          "target": "portable",
+          "arch": ["x64"]
+        }
+      ],
+      "icon": "build/icon.ico"
+    },
+    "nsis": {
+      "oneClick": false,
+      "allowToChangeInstallationDirectory": true,
+      "createDesktopShortcut": true,
+      "createStartMenuShortcut": true
+    }
+  }
+}
